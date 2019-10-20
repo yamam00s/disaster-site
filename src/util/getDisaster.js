@@ -6,7 +6,7 @@ export default async (locationStr, {startDate, endDate}) => {
     result = await axios.get(
       `http://api.aitc.jp/jmardb-api/search
         ?datetime=${startDate}datetime=${endDate}
-        &title=${locationStr}`
+        &areaname=${locationStr}`
     ).res;
   } catch(error) {
     result = error.massage;
