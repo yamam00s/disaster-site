@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './App.jsx';
 import * as serviceWorker from './serviceWorker';
 
 import getGeoLocation from './util/getGeoLocation';
@@ -15,8 +15,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     startDate: '2013-01-01',
     endDate: '2013-02-01'
   })
-  console.log(currentPosition);
-  console.log(disasterData);
 });
 
 // If you want your app to work offline and load faster, you can change
