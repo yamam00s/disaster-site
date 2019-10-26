@@ -7,6 +7,14 @@ const mapStyles = {
 };
 
 export class MapContainer extends Component {
+  constructor(props,context) {
+    super(props,context)
+    this.state = {
+      lat : props.lat,
+      lng : props.lng
+    }
+  }
+
   render() {
     return (
       <Map
@@ -14,8 +22,8 @@ export class MapContainer extends Component {
         zoom={14}
         style={mapStyles}
         initialCenter={{
-          lat: -1.2884,
-          lng: 36.8233
+          lat: this.state.lat,
+          lng: this.state.lng
         }}
       />
     );
