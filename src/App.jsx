@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GoogleMap from './components/GoogleMap.jsx';
+import './App.css';
 
 import getGeoLocation from './util/getGeoLocation';
 // import getDisaster from './util/getDisaster';
@@ -39,11 +40,13 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {
-          this.loading
-          ? <p>loading...</p>
-          : <GoogleMap lat={this.state.coords.lat} lng={this.state.coords.lng}/>
-        }
+        {this.loading ? (
+          <p>loading...</p>
+        ) : (
+          <div className="app-map">
+            <GoogleMap lat={this.state.coords.lat} lng={this.state.coords.lng}/>
+          </div>
+        )}
       </div>
     );
   }
