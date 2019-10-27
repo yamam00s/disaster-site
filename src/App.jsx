@@ -40,7 +40,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.loading ? (
+        {this.state.loading ? (
           <p>loading...</p>
         ) : (
           <div className="app-map">
