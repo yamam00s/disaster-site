@@ -5,7 +5,7 @@ import Loading from './components/Loading.jsx';
 import './App.css';
 
 import getGeoLocation from './util/getGeoLocation';
-import getReverseGeoconding, { getAddress } from './util/getReverseGeoconding';
+import getReverseGeoconding, { parseAddress } from './util/getReverseGeoconding';
 // import getDisaster from './util/getDisaster';
 
 // window.addEventListener('DOMContentLoaded', async () => {
@@ -35,7 +35,7 @@ export default class App extends Component {
       lat: geoLocation.coords.latitude,
       lng: geoLocation.coords.longitude
     });
-    const address = getAddress(reverseGeocondingRes)
+    const address = parseAddress(reverseGeocondingRes)
 
 
 
