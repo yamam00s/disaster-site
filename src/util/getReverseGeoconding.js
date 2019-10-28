@@ -18,3 +18,7 @@ export default async ({lat, lng}) => {
   }
   return result;
 }
+
+export const getAddress = (reverseGeocondingRes) => {
+  return reverseGeocondingRes.data.results[0].address_components[4].short_name
+}
