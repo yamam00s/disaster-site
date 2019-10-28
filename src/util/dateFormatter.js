@@ -10,3 +10,7 @@ export default (targetDate = null) => {
     seconds: date.getSeconds()
   }
 }
+
+export const parseZeroPadding = (num) => {
+  return (`0${num}`).slice(-2);
+}
