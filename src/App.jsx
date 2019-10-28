@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import SearchAppBar from './components/SearchAppBar.jsx';
 import GoogleMap from './components/GoogleMap.jsx';
+import Loading from './components/Loading.jsx';
 import './App.css';
 
 import getGeoLocation from './util/getGeoLocation';
@@ -39,14 +41,21 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.loading ? (
-          <p>loading...</p>
-        ) : (
-          <div className="app-map">
-            <GoogleMap lat={this.state.coords.lat} lng={this.state.coords.lng}/>
+      <div className="app">
+        {/* <Container> */}
+          <SearchAppBar />
+          <div className="app-contents">
+            {this.state.loading ? (
+              <div className="app-loading">
+                <Loading />
+              </div>
+            ) : (
+              <div className="app-map">
+                <GoogleMap lat={this.state.coords.lat} lng={this.state.coords.lng}/>
+              </div>
+            )}
           </div>
-        )}
+        {/* </Container> */}
       </div>
     );
   }
