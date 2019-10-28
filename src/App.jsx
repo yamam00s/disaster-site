@@ -6,16 +6,8 @@ import './App.css';
 
 import getGeoLocation from './util/getGeoLocation';
 import getReverseGeoconding, { parseAddress } from './util/getReverseGeoconding';
-// import getDisaster from './util/getDisaster';
-
-// window.addEventListener('DOMContentLoaded', async () => {
-//   const currentPosition = await getGeoLocation();
-//   const disasterData = await getDisaster('桜島', {
-//     startDate: '2013-01-01',
-//     endDate: '2013-02-01'
-//   })
-//   console.log(currentPosition)
-// });
+import dateFormatter, { parseZeroPadding } from './util/dateFormatter';
+import getDisaster from './util/getDisaster';
 
 export default class App extends Component {
   constructor(props,context){
@@ -35,11 +27,14 @@ export default class App extends Component {
       lat: geoLocation.coords.latitude,
       lng: geoLocation.coords.longitude
     });
-    const address = parseAddress(reverseGeocondingRes)
+    const address = parseAddress(reverseGeocondingRes);
+    const today = dateFormatter();
+    const disasterData = await getDisaster(address, {
+      startDate: `${today.year}-${parseZeroPadding(today.month -1)}-${parseZeroPadding(today.day)}`,
+      endDate: `${today.year}-${parseZeroPadding(today.month)}-${parseZeroPadding(today.day)}`
+    })
 
-
-
-    console.log(address)
+    console.log(disasterData)
     this.setState({
       coords: {
         lat: geoLocation.coords.latitude,
