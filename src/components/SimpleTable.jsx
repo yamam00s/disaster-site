@@ -10,7 +10,7 @@ import './Table.css';
 import dateFormatter, {parseZeroPadding} from '../util/dateFormatter';
 
 const tableStyles = {
-  height: '50vh',
+  height: '43vh',
   overflow: 'scroll'
 };
 
