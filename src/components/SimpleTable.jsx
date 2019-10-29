@@ -41,8 +41,8 @@ export default class SimpleTable extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.rows.map(row => (
-              <TableRow key={row.title}>
+            {this.state.rows.map((row, index) => (
+              <TableRow key={index}>
                 <TableCell scope="row">{row.headline}</TableCell>
                 <TableCell align="left">{row.title}</TableCell>
                 <TableCell align="left">{this.dataTableFormatter(row.datetime)}</TableCell>
