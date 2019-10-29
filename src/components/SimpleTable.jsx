@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import './Table.css';
 
-import dateFormatter from '../util/dateFormatter';
+import dateFormatter, {parseZeroPadding} from '../util/dateFormatter';
 
 const tableStyles = {
   height: '50vh',
@@ -24,7 +24,9 @@ export default class SimpleTable extends Component {
 
   dataTableFormatter(data) {
     const formatData = dateFormatter(data)
-    return `${formatData.year}/${formatData.month}/${formatData.day}`;
+    return `${formatData.year}/${parseZeroPadding(formatData.month)}/${
+      parseZeroPadding(formatData.day)
+    } ${parseZeroPadding(formatData.hours)}:${parseZeroPadding(formatData.minutes)}`;
   }
 
   render() {
