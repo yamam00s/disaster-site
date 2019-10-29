@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import SearchAppBar from './components/SearchAppBar.jsx';
 import GoogleMap from './components/GoogleMap.jsx';
 import Loading from './components/Loading.jsx';
+import SimpleTable from './components/SimpleTable.jsx';
 import './App.css';
 
 import getGeoLocation from './util/getGeoLocation';
+import getDisaster from './util/getDisaster';
 import getReverseGeoconding, { parseAddress } from './util/getReverseGeoconding';
 import dateFormatter, { parseZeroPadding } from './util/dateFormatter';
-import getDisaster from './util/getDisaster';
 
 export default class App extends Component {
   constructor(props,context){
@@ -17,7 +18,8 @@ export default class App extends Component {
       coords: {
         lat: -1.2884,
         lng: 36.8233
-      }
+      },
+      disasterData: []
     }
   }
 
@@ -34,12 +36,12 @@ export default class App extends Component {
       endDate: `${today.year}-${parseZeroPadding(today.month)}-${parseZeroPadding(today.day)}`
     })
 
-    console.log(disasterData)
     this.setState({
       coords: {
         lat: geoLocation.coords.latitude,
         lng: geoLocation.coords.longitude
       },
+      disasterData: disasterData.data.data,
       loading: false
     });
   }
@@ -47,20 +49,21 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
-        {/* <Container> */}
-          <SearchAppBar />
-          <div className="app-contents">
-            {this.state.loading ? (
-              <div className="app-loading">
-                <Loading />
-              </div>
-            ) : (
+        <SearchAppBar />
+        <div className="app-contents">
+          {this.state.loading ? (
+            <div className="app-loading">
+              <Loading />
+            </div>
+          ) : (
+            <div>
+              <SimpleTable rows={this.state.disasterData}/>
               <div className="app-map">
                 <GoogleMap lat={this.state.coords.lat} lng={this.state.coords.lng}/>
               </div>
-            )}
-          </div>
-        {/* </Container> */}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

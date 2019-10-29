@@ -1,0 +1,7 @@
+td.MuiTableCell-root {
+  padding: 10px 16px;
+}
+
+th.MuiTableCell-head {
+  font-weight: bold;
+}
