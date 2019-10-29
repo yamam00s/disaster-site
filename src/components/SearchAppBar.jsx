@@ -55,14 +55,15 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       width: 120,
       '&:focus': {
-        width: 200,
+        width: 300,
       },
     },
   },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
   const classes = useStyles();
+  const { event } = props;
 
   return (
     <div className={classes.root}>
@@ -90,6 +91,12 @@ export default function SearchAppBar() {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onKeyDown={(e) => {
+                const enterKeyNumber = 13;
+                if (e.keyCode === enterKeyNumber) {
+                  event(e.target.value)
+                }
+              }}
             />
           </div>
         </Toolbar>

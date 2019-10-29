@@ -5,8 +5,10 @@ import Loading from './components/Loading.jsx';
 import SimpleTable from './components/SimpleTable.jsx';
 import './App.css';
 
+// util
 import getGeoLocation from './util/getGeoLocation';
 import getDisaster from './util/getDisaster';
+import getGeocoding, { parseLocation } from './util/getGeocoding';
 import getReverseGeoconding, { parseAddress } from './util/getReverseGeoconding';
 import dateFormatter, { parseZeroPadding } from './util/dateFormatter';
 
@@ -23,6 +25,35 @@ export default class App extends Component {
     }
   }
 
+
+  initApp = async ({lat, lng}, address) => {
+    const today = dateFormatter();
+    const disasterData = await getDisaster(address, {
+      startDate: `${today.year}-${parseZeroPadding(today.month -1)}-${parseZeroPadding(today.day)}`,
+      endDate: `${today.year}-${parseZeroPadding(today.month)}-${parseZeroPadding(today.day)}`
+    })
+    this.setState({
+      coords: {
+        lat: lat,
+        lng: lng
+      },
+      disasterData: disasterData.data.data,
+      loading: false
+    });
+  }
+
+  onSearch = async (address) => {
+    this.setState({
+      loading: true
+    });
+    const geocondingRes = await getGeocoding(address)
+    const geoLocation = await parseLocation(geocondingRes)
+    this.initApp({
+      lat: geoLocation.lat,
+      lng: geoLocation.lng
+    }, address)
+  };
+
   async componentDidMount() {
     const geoLocation = await getGeoLocation();
     const reverseGeocondingRes = await getReverseGeoconding({
@@ -30,26 +61,16 @@ export default class App extends Component {
       lng: geoLocation.coords.longitude
     });
     const address = parseAddress(reverseGeocondingRes);
-    const today = dateFormatter();
-    const disasterData = await getDisaster(address, {
-      startDate: `${today.year}-${parseZeroPadding(today.month -1)}-${parseZeroPadding(today.day)}`,
-      endDate: `${today.year}-${parseZeroPadding(today.month)}-${parseZeroPadding(today.day)}`
-    })
-
-    this.setState({
-      coords: {
-        lat: geoLocation.coords.latitude,
-        lng: geoLocation.coords.longitude
-      },
-      disasterData: disasterData.data.data,
-      loading: false
-    });
+    this.initApp({
+      lat: geoLocation.coords.latitude,
+      lng: geoLocation.coords.longitude
+    }, address)
   }
 
   render() {
     return (
       <div className="app">
-        <SearchAppBar />
+        <SearchAppBar event={this.onSearch}/>
         <div className="app-contents">
           {this.state.loading ? (
             <div className="app-loading">
