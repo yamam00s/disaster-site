@@ -18,3 +18,10 @@ export default async (address) => {
   }
   return result;
 }
+
+export const parseLocation = (geocondingRes) => {
+  return {
+    lat: geocondingRes.data.results[0].geometry.location.lat,
+    lng: geocondingRes.data.results[0].geometry.location.lng
+  }
+}
