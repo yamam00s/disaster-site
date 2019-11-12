@@ -4,7 +4,7 @@ import apiKey from '../apiKey';
 
 const mapStyles = {
   width: '100%',
-  height: '50vh',
+  height: ' 100%',
 };
 
 export class MapContainer extends Component {
